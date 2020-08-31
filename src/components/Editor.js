@@ -7,7 +7,8 @@ class Editor extends React.Component {
         super(props);
         this.state = {
             textArray: [""],
-            currentPoint: ""
+            currentPoint: "",
+            sliderTags: {}
         }
     }
 
@@ -24,12 +25,15 @@ class Editor extends React.Component {
                 }
                 this.setState({
                     textArray: [...this.state.textArray, current],
-                    currentPoint: this.state.currentPoint
+                    currentPoint: this.state.currentPoint,
+                    sliderTags: {...this.state.sliderTags}
                 })
             }
             else {
                 this.setState({
-                    textArray: [charToAdd]
+                    textArray: [charToAdd],
+                    currentPoint: this.state.currentPoint,
+                    sliderTags: {...this.state.sliderTags}
                 })
             }
         }
@@ -42,14 +46,30 @@ class Editor extends React.Component {
         });
     }
 
+    handleSaveButtonClick() {
+        console.log(this);
+        const tag = prompt("Enter tag");
+        const position = this.state.textArray.length - 1;
+        const newTags = {...this.state.sliderTags};
+        newTags[position] = tag;
+        this.setState({
+            textArray: this.state.textArray,
+            currentPoint: this.state.currentPoint,
+            sliderTags: newTags
+        })
+
+    }
+
     render() {
         return (
             <div className="main">
                 <textarea className="formControl editor" onKeyDown={this.handleKeyDown.bind(this)}></textarea>
+                <button className="btn btn-primary" onClick={this.handleSaveButtonClick.bind(this)}>Save</button>
                 <Slider className="slider"
                         min={0}
                         max={this.state.textArray.length}
                         onChange={this.onSliderChange.bind(this)}
+                        marks={this.state.sliderTags}
                         railStyle={{
                             height: 2
                         }}
