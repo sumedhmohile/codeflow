@@ -6,15 +6,22 @@ class Editor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            textArray: [],
+            textArray: [""],
             currentPoint: ""
         }
     }
 
     handleKeyDown(e) {
-        if(isValidKey(e.key)) {
+        const charToAdd = getCharFromKeyPress(e.key);
+        if(charToAdd !== undefined) {
             if(this.state.textArray.length > 0) {
-                const current = this.state.textArray[this.state.textArray.length - 1] + e.key; 
+                let current;
+                if(charToAdd === "-1") {
+                    current = this.state.textArray[this.state.textArray.length - 1].slice(0, this.state.textArray[this.state.textArray.length - 1].length - 1)  
+                }
+                else {
+                    current = this.state.textArray[this.state.textArray.length - 1] + charToAdd; 
+                }
                 this.setState({
                     textArray: [...this.state.textArray, current],
                     currentPoint: this.state.currentPoint
@@ -22,11 +29,10 @@ class Editor extends React.Component {
             }
             else {
                 this.setState({
-                    textArray: [e.key]
+                    textArray: [charToAdd]
                 })
             }
         }
-
     }
 
     onSliderChange(value) {
@@ -65,9 +71,17 @@ class Editor extends React.Component {
     }
 }
 
-function isValidKey(key) {
-    const keys = ['a', 'b', 'c', 'd'];
-    return keys.includes(key);
+function getCharFromKeyPress(key) {
+    if(key.length > 1) {
+        if(key === "Enter")
+            return "\n";
+        if(key === "Backspace")
+            return "-1";
+        console.log(key);
+        return;
+    }
+
+    return key;
 }
 
 export default Editor;
