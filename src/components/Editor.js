@@ -40,14 +40,16 @@ class Editor extends React.Component {
 
     handleSaveButtonClick() {
         const tag = prompt("Enter tag");
-        const position = this.state.textArray.length - 1;
-        const newTags = {...this.state.sliderTags};
-        newTags[position] = tag;
-        this.setState({
-            textArray: this.state.textArray,
-            currentPoint: this.state.currentPoint,
-            sliderTags: newTags
-        })
+        if (tag) {
+            const position = this.state.textArray.length - 1;
+            const newTags = {...this.state.sliderTags};
+            newTags[position] = tag;
+            this.setState({
+                textArray: this.state.textArray,
+                currentPoint: this.state.currentPoint,
+                sliderTags: newTags
+            });
+        }
 
     }
 
@@ -59,9 +61,32 @@ class Editor extends React.Component {
         const file = new Blob([JSON.stringify(textData)], {type: "text/plain"});
         const element = document.createElement("a");
         element.href = URL.createObjectURL(file);
-        element.download = "myFile.txt";
+        element.download = "file.cflow";
         document.body.appendChild(element);
         element.click();
+    }
+
+    importFile(e) {
+        const file = e.target.files[0];
+        const context = this;
+        const reader = new FileReader();
+        reader.readAsText(file);
+
+        reader.onload = function() {
+            const resultJSON = JSON.parse(reader.result);
+            const textArray = resultJSON.text;
+
+            context.setState({
+                textArray: resultJSON.text,
+                sliderTags: resultJSON.checkPoints,
+                current: resultJSON.text[resultJSON.text.length - 1]
+            });
+
+        }
+        reader.onerror = function() {
+            console.error(reader.error);
+        }
+
     }
 
 
@@ -71,6 +96,8 @@ class Editor extends React.Component {
                 <textarea className="formControl editor" onKeyDown={this.handleKeyDown.bind(this)}></textarea>
                 <button className="btn btn-primary" onClick={this.handleSaveButtonClick.bind(this)}>Save</button>
                 <button className="btn btn-primary" onClick={this.exportFile.bind(this)}>Export</button>
+                <input type="file" onChange={this.importFile.bind(this)}></input>
+                {/* <button className="btn btn-primary" onClick={this.importFile.bind(this)}>Import</button> */}
                 <Slider className="slider"
                         min={0}
                         max={this.state.textArray.length}
