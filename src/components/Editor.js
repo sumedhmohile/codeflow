@@ -15,29 +15,21 @@ class Editor extends React.Component {
     handleKeyDown(e) {
         const charToAdd = getCharFromKeyPress(e.key);
         if(charToAdd !== undefined) {
-            if(this.state.textArray.length > 0) {
-                let current;
-                if(charToAdd === "-1") {
-                    current = this.state.textArray[this.state.textArray.length - 1].slice(0, this.state.textArray[this.state.textArray.length - 1].length - 1)  
-                }
-                else {
-                    current = this.state.textArray[this.state.textArray.length - 1] + charToAdd; 
-                }
-                this.setState({
-                    textArray: [...this.state.textArray, current],
-                    currentPoint: this.state.currentPoint,
-                    sliderTags: {...this.state.sliderTags}
-                })
+            let current;
+            if(charToAdd === "-1") {
+                current = this.state.textArray[this.state.textArray.length - 1].slice(0, this.state.textArray[this.state.textArray.length - 1].length - 1)  
             }
             else {
-                this.setState({
-                    textArray: [charToAdd],
-                    currentPoint: this.state.currentPoint,
-                    sliderTags: {...this.state.sliderTags}
-                })
+                current = this.state.textArray[this.state.textArray.length - 1] + charToAdd; 
             }
+            this.setState({
+                textArray: [...this.state.textArray, current],
+                currentPoint: this.state.currentPoint,
+                sliderTags: {...this.state.sliderTags}
+            })
         }
     }
+    
 
     onSliderChange(value) {
         this.setState({
@@ -47,7 +39,6 @@ class Editor extends React.Component {
     }
 
     handleSaveButtonClick() {
-        console.log(this);
         const tag = prompt("Enter tag");
         const position = this.state.textArray.length - 1;
         const newTags = {...this.state.sliderTags};
@@ -60,11 +51,26 @@ class Editor extends React.Component {
 
     }
 
+    exportFile() {
+        const textData = {
+            text: this.state.textArray,
+            checkPoints: this.state.sliderTags
+        };
+        const file = new Blob([JSON.stringify(textData)], {type: "text/plain"});
+        const element = document.createElement("a");
+        element.href = URL.createObjectURL(file);
+        element.download = "myFile.txt";
+        document.body.appendChild(element);
+        element.click();
+    }
+
+
     render() {
         return (
             <div className="main">
                 <textarea className="formControl editor" onKeyDown={this.handleKeyDown.bind(this)}></textarea>
                 <button className="btn btn-primary" onClick={this.handleSaveButtonClick.bind(this)}>Save</button>
+                <button className="btn btn-primary" onClick={this.exportFile.bind(this)}>Export</button>
                 <Slider className="slider"
                         min={0}
                         max={this.state.textArray.length}
