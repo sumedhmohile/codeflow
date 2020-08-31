@@ -37,9 +37,18 @@
   }
 }
 
-textarea {
+.editor {
   width: 80%;
   height: 500px;
-  margin: 10px;
+  margin: 20px;
   padding: 10px;
+}
+
+.slider {
+  margin: 50px;
+}
+
+.main {
+  width: 80%;
+  padding: 10%px
 }
