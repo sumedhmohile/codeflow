@@ -74,7 +74,6 @@ class Editor extends React.Component {
 
         reader.onload = function() {
             const resultJSON = JSON.parse(reader.result);
-            const textArray = resultJSON.text;
 
             context.setState({
                 textArray: resultJSON.text,
@@ -97,7 +96,6 @@ class Editor extends React.Component {
                 <button className="btn btn-primary" onClick={this.handleSaveButtonClick.bind(this)}>Save</button>
                 <button className="btn btn-primary" onClick={this.exportFile.bind(this)}>Export</button>
                 <input type="file" onChange={this.importFile.bind(this)}></input>
-                {/* <button className="btn btn-primary" onClick={this.importFile.bind(this)}>Import</button> */}
                 <Slider className="slider"
                         min={0}
                         max={this.state.textArray.length}
@@ -130,7 +128,6 @@ function getCharFromKeyPress(key) {
             return "\n";
         if(key === "Backspace")
             return "-1";
-        console.log(key);
         return;
     }
 
