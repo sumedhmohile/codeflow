@@ -91,11 +91,15 @@ class Editor extends React.Component {
 
     render() {
         return (
-            <div className="main">
-                <textarea className="formControl editor" onKeyDown={this.handleKeyDown.bind(this)}></textarea>
-                <button className="btn btn-primary" onClick={this.handleSaveButtonClick.bind(this)}>Save</button>
-                <button className="btn btn-primary" onClick={this.exportFile.bind(this)}>Export</button>
-                <input type="file" onChange={this.importFile.bind(this)}></input>
+            <div className="container">
+                <div className="row">
+                    <div className="col-8"><textarea className="form-control editor" onKeyDown={this.handleKeyDown.bind(this)}></textarea></div>
+                    <div className="col-4 sidePanel">
+                        <button className="btn btn-primary btn-block" onClick={this.handleSaveButtonClick.bind(this)}>Save</button>
+                        <button className="btn btn-primary btn-block" onClick={this.exportFile.bind(this)}>Export</button>
+                        <input type="file" className="form-control-file sidePanelElement" onChange={this.importFile.bind(this)}></input>
+                    </div>
+                </div>
                 <Slider className="slider"
                         min={0}
                         max={this.state.textArray.length}
