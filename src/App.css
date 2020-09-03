@@ -12,9 +12,10 @@
 }
 
 .sidePanel {
+  margin-top: 50px;
   padding: 10px;
 }
 
 .sidePanelElement {
-  padding: 10px;
+  display: none;
 }

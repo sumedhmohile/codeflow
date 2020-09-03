@@ -88,16 +88,20 @@ class Editor extends React.Component {
 
     }
 
+    triggerFileImport() {
+        document.getElementById("fileUpload").click();
+    }
 
     render() {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-8"><textarea className="form-control editor" onKeyDown={this.handleKeyDown.bind(this)}></textarea></div>
+                    <div className="col-8"><textarea className="form-control editor" rows="10" onKeyDown={this.handleKeyDown.bind(this)}></textarea></div>
                     <div className="col-4 sidePanel">
                         <button className="btn btn-primary btn-block" onClick={this.handleSaveButtonClick.bind(this)}>Save</button>
                         <button className="btn btn-primary btn-block" onClick={this.exportFile.bind(this)}>Export</button>
-                        <input type="file" className="form-control-file sidePanelElement" onChange={this.importFile.bind(this)}></input>
+                        <button className="btn btn-primary btn-block" onClick={this.triggerFileImport.bind(this)}>Import</button>
+                        <input id="fileUpload" type="file" className="sidePanelElement" onChange={this.importFile.bind(this)}></input>
                     </div>
                 </div>
                 <Slider className="slider"
@@ -106,14 +110,15 @@ class Editor extends React.Component {
                         onChange={this.onSliderChange.bind(this)}
                         marks={this.state.sliderTags}
                         railStyle={{
-                            height: 2
+                            height: 2,
+                            backgroundColor: "red"
                         }}
                         handleStyle={{
-                            height: 28,
-                            width: 28,
+                            height: 20,
+                            width: 20,
                             marginLeft: 0,
-                            marginTop: -14,
-                            backgroundColor: "red",
+                            marginTop: -10,
+                            backgroundColor: "blue",
                             border: 1
                         }}
                         trackStyle={{
