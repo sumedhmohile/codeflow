@@ -41,7 +41,7 @@ class Editor extends React.Component {
     handleSaveButtonClick() {
         const tag = prompt("Enter tag");
         if (tag) {
-            const position = this.state.textArray.length - 1;
+            const position = this.state.textArray.length;
             const newTags = {...this.state.sliderTags};
             newTags[position] = tag;
             this.setState({
