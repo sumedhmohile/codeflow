@@ -9,7 +9,7 @@
 
 .slider {
   margin-top: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 .sidepanel {
@@ -19,4 +19,8 @@
 
 .sidePanelElement {
   display: none;
+}
+
+.title {
+  color: white
 }
