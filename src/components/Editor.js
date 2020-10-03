@@ -119,7 +119,7 @@ class Editor extends React.Component {
                         border: 1
                     }}
                     trackStyle={{
-                        background: "none"
+                        backgroundColor: "blue"
                     }}
             />
                 <textarea className="form-control editor" rows="10" disabled="disabled" value={this.state.currentPoint}></textarea>
